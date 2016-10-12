@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+	<title>Homepage</title>
+</head>
+<body>
+	<div>
+		<select id="databases">
+		</select>
+	</div>
+</body>
+
+<script>
+	$(document).ready(function(){
+		$.get("/databases", function(data){
+			var select = $("#databases");
+			for(var i = 0; i < data.length; i++){
+				select.append($("<option></option>").attr("value", data[i].Database).text(data[i].Database));
+			}
+			console.log(data);
+		});
+
+
+		$("#databases").on('change', function(evt){
+			var target = evt.target;
+			var option = target[target.selectedIndex].value;
+			
+			$.get('/databases/'+option+'/tables', function(data){
+
+			});
+		})
+	});
+</script>
+</html>
